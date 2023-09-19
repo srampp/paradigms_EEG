@@ -102,11 +102,14 @@ class Experiment:
         Start a training run which always uses the standard training stimuli list: stimuli_list_training.csv
         """
         filenames, responseTimes = self.readStimulusList('stimuli_list_training.csv')
-        startTriggers(self)
+        self.setupTriggers()
         self.waitForButton(-1, ['space'], 'Press space to start')
+        self.fixation.autoDraw = True
         self.presentSound('wav' + os.sep +'Instruktionen.wav')
-        self.waitForButton(-1, ['space'], 'Press space to continue')
         self.fixation.autoDraw = False
+        self.waitForButton(-1, ['space'], 'Press space to continue')
+        self.fixation.autoDraw = True
+        self.wait(1)
         for n in range(0, len(filenames)):
             path = 'wav' + os.sep + filenames[n]
             condition = filenames[n].split('_')
